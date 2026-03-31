@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Countdown Timer</title>
+
+<style>
+  /* Body styling */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Spicy Rice", cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: transparent; /* allows seamless embedding */
+  }
+
+  /* Timer wrapper */
+  #timer-wrapper {
+    text-align: center;
+  }
+
+  /* Headline */
+  #headline {
+    font-size: 36px;
+    color: #f9af0e;
+    -webkit-text-stroke: 2px #5a3a2e;
+    margin-bottom: 20px;
+  }
+
+  /* Timer numbers */
+  #timer {
+    display: inline-block;
+    font-family: "Spicy Rice", monospace; /* monospaced digits */
+    color: #ffffff;
+    -webkit-text-stroke: 2px #C65A1E;
+    font-size: 48px;
+    min-width: 400px; /* ensures block is wide enough for longest time */
+    text-align: center;
+  }
+
+  /* Each number block */
+  #timer span {
+    display: inline-block;
+    width: 2ch; /* ensures equal width per digit */
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div id="timer-wrapper">
+  <div id="headline">2026 IPS Trade Show Begins In:</div>
+  <div id="timer"></div>
+</div>
+
+<script>
+  const timerEl = document.getElementById("timer");
+
+  const eventStart = new Date("June 9, 2026 09:00:00").getTime();
+  const eventEnd = new Date("June 10, 2026 00:00:00").getTime();
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+
+    if (now >= eventEnd) {
+      timerEl.textContent = "Thanks for coming!";
+      return;
+    }
+
+    if (now >= eventStart) {
+      timerEl.textContent = "Happening Now!";
+      return;
+    }
+
+    const distance = eventStart - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((distance / (1000 * 60)) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
+
+    // Each number in a span to prevent shifting
+    timerEl.innerHTML = `
+      <span>${days}</span>d 
+      <span>${hours}</span>h 
+      <span>${minutes}</span>m 
+      <span>${seconds}</span>s
+    `;
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+</script>
+
+</body>
+</html>
